@@ -4,12 +4,12 @@
     <Version>1.0.1</Version>
     <Authors>Lykke</Authors>
     <Company>Lykke</Company>
-    <Product>Lykke.Service.History</Product>
-    <Description>Client for Lykke.Service.History API</Description>
-    <PackageLicenseUrl>https://github.com/LykkeCity/Lykke.Service.History/blob/master/LICENSE</PackageLicenseUrl>
-    <PackageProjectUrl>https://github.com/LykkeCity/Lykke.Service.History</PackageProjectUrl>
+    <Product>Lykke.AlgoStore.Service.History</Product>
+    <Description>Client for Lykke.AlgoStore.Service.History API</Description>
+    <PackageLicenseUrl>https://github.com/LykkeCity/Lykke.AlgoStore.Service.History/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/LykkeCity/Lykke.AlgoStore.Service.History</PackageProjectUrl>
     <PackageIconUrl>https://avatars3.githubusercontent.com/u/14153330?v=3&amp;s=200</PackageIconUrl>
-    <RepositoryUrl>https://github.com/LykkeCity/Lykke.Service.History.git</RepositoryUrl>
+    <RepositoryUrl>https://github.com/LykkeCity/Lykke.AlgoStore.Service.History.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>Lykke</PackageTags>
   </PropertyGroup>
