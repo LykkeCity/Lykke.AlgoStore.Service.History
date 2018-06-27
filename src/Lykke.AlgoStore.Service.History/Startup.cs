@@ -2,7 +2,6 @@
 using AutoMapper;
 using Lykke.AlgoStore.CSharp.AlgoTemplate.Models.Mapper;
 using Lykke.AlgoStore.Security.InstanceAuth;
-using Lykke.Common.ApiLibrary.Middleware;
 using Lykke.Sdk;
 using Lykke.AlgoStore.Service.History.MapperProfiles;
 using Lykke.AlgoStore.Service.History.Settings;

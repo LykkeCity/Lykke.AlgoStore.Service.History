@@ -1,6 +1,6 @@
 ﻿using Lykke.SettingsReader.Attributes;
 
-namespace Lykke.AlgoStore.Service.History.ServiceSettings
+namespace Lykke.AlgoStore.Service.History.Settings
 {
     public class CandlesHistoryServiceClient
     {

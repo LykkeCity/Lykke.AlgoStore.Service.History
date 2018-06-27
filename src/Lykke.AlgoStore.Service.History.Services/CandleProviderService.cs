@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Lykke.AlgoStore.CSharp.AlgoTemplate.Abstractions.Core.Functions;
-using Lykke.AlgoStore.CSharp.AlgoTemplate.Models.Repositories;
 using Lykke.Service.CandlesHistory.Client;
 using Lykke.Service.CandlesHistory.Client.Models;
 using Lykke.AlgoStore.Service.History.Core.Domain;

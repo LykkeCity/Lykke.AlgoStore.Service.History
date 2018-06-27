@@ -1,5 +1,4 @@
 ﻿using JetBrains.Annotations;
-using Lykke.AlgoStore.Service.History.ServiceSettings;
 using Lykke.Sdk.Settings;
 
 namespace Lykke.AlgoStore.Service.History.Settings
