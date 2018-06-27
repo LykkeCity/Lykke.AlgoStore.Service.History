@@ -54,7 +54,6 @@ namespace Lykke.AlgoStore.Service.History
                 {
                     logs.AzureTableName = "HistoryLog";
                     logs.AzureTableConnectionStringResolver = settings => settings.HistoryService.Db.LogsConnString;
-
                 };
                 options.Swagger = swagger => swagger.OperationFilter<ApiKeyHeaderOperationFilter>();
             });
@@ -62,10 +61,7 @@ namespace Lykke.AlgoStore.Service.History
 
         public void Configure(IApplicationBuilder app)
         {
-            app.UseLykkeForwardedHeaders();
-
             app.UseAuthentication();
-
             app.UseLykkeConfiguration();
         }
     }
