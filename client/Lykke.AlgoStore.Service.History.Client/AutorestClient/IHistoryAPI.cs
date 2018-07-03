@@ -34,10 +34,13 @@ namespace Lykke.AlgoStore.Service.History.Client.AutorestClient
 
 
         /// <param name='startFrom'>
+        /// The start of the period to get candles for (inclusive)
         /// </param>
         /// <param name='endOn'>
+        /// The end of the period to get candles for (exclusive)
         /// </param>
         /// <param name='indicatorName'>
+        /// The name of the indicator to fetch candles for
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -47,6 +50,9 @@ namespace Lykke.AlgoStore.Service.History.Client.AutorestClient
         /// </param>
         Task<HttpOperationResponse<object>> GetCandlesWithHttpMessagesAsync(System.DateTime startFrom, System.DateTime endOn, string indicatorName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
+        /// <summary>
+        /// Checks service is alive
+        /// </summary>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>

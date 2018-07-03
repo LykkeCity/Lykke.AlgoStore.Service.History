@@ -32,6 +32,8 @@ namespace Lykke.AlgoStore.Service.History.Controllers
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(IEnumerable<CandleModel>))]
         [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(ErrorResponseModel))]
         [ProducesResponseType((int)HttpStatusCode.ServiceUnavailable)]
+        [ProducesResponseType((int)HttpStatusCode.TooManyRequests)]
+        [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
         public async Task<IActionResult> GetCandlesForPeriod(HistoryRequestModel model)
         {
             if (!ModelState.IsValid)

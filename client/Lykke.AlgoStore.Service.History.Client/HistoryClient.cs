@@ -46,7 +46,14 @@ namespace Lykke.AlgoStore.Service.History.Client
                                                  exceptions);
                 }
 
-                throw new HttpOperationException("Service unavailable");
+                var message = (int)operationResponse.Response.StatusCode == 429 ?
+                                    "Rate limited" :
+                                    "Service unavailable";
+
+                throw new HttpOperationException(message)
+                {
+                    Response = new HttpResponseMessageWrapper(operationResponse.Response, "")
+                };
             }
         }
 
