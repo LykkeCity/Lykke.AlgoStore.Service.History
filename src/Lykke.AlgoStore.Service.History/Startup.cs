@@ -43,7 +43,7 @@ namespace Lykke.AlgoStore.Service.History
         {
             var appSettings = Configuration.LoadSettings<AppSettings>();
 
-            services.AddInstanceAuthentication(appSettings.Nested(x => x.HistoryService.InstanceCacheSettings)
+            services.AddInstanceAuthentication(appSettings.Nested(x => x.AlgoStoreHistoryService.InstanceAuthSettings)
                                                           .CurrentValue);
 
             return services.BuildServiceProvider<AppSettings>(options =>
@@ -52,7 +52,7 @@ namespace Lykke.AlgoStore.Service.History
                 options.Logs = logs =>
                 {
                     logs.AzureTableName = "HistoryLog";
-                    logs.AzureTableConnectionStringResolver = settings => settings.HistoryService.Db.LogsConnString;
+                    logs.AzureTableConnectionStringResolver = settings => settings.AlgoStoreHistoryService.Db.LogsConnString;
                 };
                 options.Swagger = swagger => swagger.OperationFilter<ApiKeyHeaderOperationFilter>();
             });

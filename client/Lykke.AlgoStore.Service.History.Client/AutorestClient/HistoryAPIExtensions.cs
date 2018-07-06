@@ -19,10 +19,13 @@ namespace Lykke.AlgoStore.Service.History.Client.AutorestClient
             /// The operations group for this extension method.
             /// </param>
             /// <param name='startFrom'>
+            /// The start of the period to get candles for (inclusive)
             /// </param>
             /// <param name='endOn'>
+            /// The end of the period to get candles for (exclusive)
             /// </param>
             /// <param name='indicatorName'>
+            /// The name of the indicator to fetch candles for
             /// </param>
             public static object GetCandles(this IHistoryAPI operations, System.DateTime startFrom, System.DateTime endOn, string indicatorName)
             {
@@ -33,10 +36,13 @@ namespace Lykke.AlgoStore.Service.History.Client.AutorestClient
             /// The operations group for this extension method.
             /// </param>
             /// <param name='startFrom'>
+            /// The start of the period to get candles for (inclusive)
             /// </param>
             /// <param name='endOn'>
+            /// The end of the period to get candles for (exclusive)
             /// </param>
             /// <param name='indicatorName'>
+            /// The name of the indicator to fetch candles for
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -49,6 +55,9 @@ namespace Lykke.AlgoStore.Service.History.Client.AutorestClient
                 }
             }
 
+            /// <summary>
+            /// Checks service is alive
+            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -57,6 +66,9 @@ namespace Lykke.AlgoStore.Service.History.Client.AutorestClient
                 return operations.IsAliveAsync().GetAwaiter().GetResult();
             }
 
+            /// <summary>
+            /// Checks service is alive
+            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>

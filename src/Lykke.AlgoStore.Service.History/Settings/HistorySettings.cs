@@ -7,7 +7,7 @@ namespace Lykke.AlgoStore.Service.History.Settings
     public class HistorySettings
     {
         public DbSettings Db { get; set; }
-        public InstanceCacheSettings InstanceCacheSettings { get; set; }
+        public InstanceAuthSettings InstanceAuthSettings { get; set; }
         public RateLimitSettings RateLimitSettings { get; set; }
     }
 }

@@ -24,7 +24,8 @@ namespace Lykke.AlgoStore.Service.History.Modules
 
         protected override void Load(ContainerBuilder builder)
         {
-            var reloadingDbManager = _appSettings.ConnectionString(x => x.HistoryService.Db.TableStorageConnectionString);
+            var reloadingDbManager = _appSettings
+                .ConnectionString(x => x.AlgoStoreHistoryService.Db.TableStorageConnectionString);
 
             var tempLog = LogFactory.Create().AddUnbufferedConsole();
 
@@ -36,13 +37,15 @@ namespace Lykke.AlgoStore.Service.History.Modules
 
             builder.RegisterType<CandleProviderService>().As<ICandleProviderService>();
 
-            builder.RegisterInstance(_appSettings.CurrentValue.HistoryService.RateLimitSettings)
+            builder.RegisterInstance(_appSettings.CurrentValue.AlgoStoreHistoryService.RateLimitSettings)
                 .AsSelf()
                 .SingleInstance();
 
             builder.RegisterType<Candleshistoryservice>()
                 .As<ICandleshistoryservice>()
-                .WithParameter(TypedParameter.From(new Uri(_appSettings.CurrentValue.CandlesHistoryServiceClient.ServiceUrl)));
+                .WithParameter(
+                    TypedParameter.From(
+                        new Uri(_appSettings.CurrentValue.AlgoStoreCandlesHistoryServiceClient.ServiceUrl)));
         }
     }
 }

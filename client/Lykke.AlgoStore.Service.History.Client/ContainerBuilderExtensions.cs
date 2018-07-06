@@ -14,11 +14,9 @@ namespace Lykke.AlgoStore.Service.History.Client
         /// </summary>
         /// <param name="builder">The container to register the history client in</param>
         /// <param name="serviceUrl">The history client URL</param>
-        /// <param name="log">The logger to use</param>
-        public static void RegisterHistoryClient(this ContainerBuilder builder, string serviceUrl, ILog log)
+        public static void RegisterHistoryClient(this ContainerBuilder builder, string serviceUrl)
         {
             if (builder == null) throw new ArgumentNullException(nameof(builder));
-            if (log == null) throw new ArgumentNullException(nameof(log));
             if (string.IsNullOrWhiteSpace(serviceUrl))
                 throw new ArgumentException("Value cannot be null or whitespace.", nameof(serviceUrl));
 
@@ -33,10 +31,9 @@ namespace Lykke.AlgoStore.Service.History.Client
         /// </summary>
         /// <param name="builder">The container to register the history client in</param>
         /// <param name="settings">The settings to use for configuring the client</param>
-        /// <param name="log">The logger to use</param>
-        public static void RegisterHistoryClient(this ContainerBuilder builder, HistoryServiceClientSettings settings, ILog log)
+        public static void RegisterHistoryClient(this ContainerBuilder builder, HistoryServiceClientSettings settings)
         {
-            builder.RegisterHistoryClient(settings?.ServiceUrl, log);
+            builder.RegisterHistoryClient(settings?.ServiceUrl);
         }
     }
 }
