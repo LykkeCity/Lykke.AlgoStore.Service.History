@@ -6,7 +6,7 @@ namespace Lykke.AlgoStore.Service.History.Settings
     [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
     public class AppSettings : BaseAppSettings
     {
-        public HistorySettings HistoryService { get; set; }
-        public CandlesHistoryServiceClient CandlesHistoryServiceClient { get; set; }
+        public HistorySettings AlgoStoreHistoryService { get; set; }
+        public CandlesHistoryServiceClient AlgoStoreCandlesHistoryServiceClient { get; set; }
     }
 }
