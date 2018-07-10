@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <AssemblyName>Lykke.AlgoStore.Service.History.Services</AssemblyName>
+    <RootNamespace>Lykke.AlgoStore.Service.History.Services</RootNamespace>
+    <Version>1.0.0</Version>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Lykke.AlgoStore.CSharp.AlgoTemplate.Abstractions" Version="1.0.15" />
+    <PackageReference Include="Lykke.Common" Version="7.0.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Lykke.AlgoStore.Service.History.Core\Lykke.AlgoStore.Service.History.Core.csproj" />
+  </ItemGroup>
+</Project>
