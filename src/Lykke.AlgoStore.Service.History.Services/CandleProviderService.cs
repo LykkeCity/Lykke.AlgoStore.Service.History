@@ -121,6 +121,20 @@ namespace Lykke.AlgoStore.Service.History.Services
 
             using (var response = responseTask.Result)
             {
+                if(response.Body is ErrorResponse)
+                {
+                    var errors = response.Body as ErrorResponse;
+                    foreach(var error in errors.ErrorMessages)
+                    {
+                        foreach(var message in error.Value)
+                        {
+                            errorDictionary.Add(error.Key, message);
+                        }
+                    }
+
+                    return null;
+                }
+
                 return ((CandlesHistoryResponseModel)response.Body).History;
             }
         }
