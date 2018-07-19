@@ -55,6 +55,7 @@ namespace Lykke.AlgoStore.Service.History.Controllers
             }
             catch(TaskCanceledException)
             {
+                Response.Headers.Add("Retry-After", "60");
                 return StatusCode((int)HttpStatusCode.ServiceUnavailable);
             }
         }
