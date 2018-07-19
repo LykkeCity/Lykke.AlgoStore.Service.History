@@ -5,6 +5,7 @@ using Lykke.AlgoStore.Service.History.Core.Domain;
 using Lykke.AlgoStore.Service.History.Core.Services;
 using Lykke.AlgoStore.Service.History.Models;
 using Lykke.Service.CandlesHistory.Client.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
@@ -102,6 +103,13 @@ namespace Lykke.AlgoStore.Service.History.Tests
                 .ThrowsAsync(new TaskCanceledException());
 
             var candlesController = new CandlesController(candleProviderServiceMock.Object);
+
+            candlesController.ControllerContext = 
+                Mock.Of<ControllerContext>(
+                    (c) => c.HttpContext == Mock.Of<HttpContext>(
+                        (hc) => hc.Response == Mock.Of<HttpResponse>(
+                            (hr) => hr.Headers == Mock.Of<IHeaderDictionary>())));
+
             var model = new HistoryRequestModel();
 
             var result = await candlesController.GetCandlesForPeriod(model);
