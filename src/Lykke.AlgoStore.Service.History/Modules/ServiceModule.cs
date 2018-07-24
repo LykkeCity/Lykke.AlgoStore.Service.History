@@ -33,6 +33,8 @@ namespace Lykke.AlgoStore.Service.History.Modules
                         .Create(reloadingDbManager, AlgoClientInstanceRepository.TableName, tempLog));
             builder.RegisterInstance(AzureTableStorage<AlgoInstanceStoppingEntity>
                         .Create(reloadingDbManager, AlgoClientInstanceRepository.TableName, tempLog));
+            builder.RegisterInstance(AzureTableStorage<AlgoInstanceTcBuildEntity>
+                        .Create(reloadingDbManager, AlgoClientInstanceRepository.TableName, tempLog));
             builder.RegisterType<AlgoClientInstanceRepository>().As<IAlgoClientInstanceRepository>();
 
             builder.RegisterType<CandleProviderService>().As<ICandleProviderService>();

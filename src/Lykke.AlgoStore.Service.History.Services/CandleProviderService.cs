@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Lykke.AlgoStore.CSharp.AlgoTemplate.Abstractions.Core.Functions;
 using Lykke.Service.CandlesHistory.Client;
 using Lykke.Service.CandlesHistory.Client.Models;
 using Lykke.AlgoStore.Service.History.Core.Domain;
@@ -16,32 +15,34 @@ namespace Lykke.AlgoStore.Service.History.Services
         private static readonly Dictionary<CandleTimeInterval, TimeSpan> _maxAllowedPeriods =
             new Dictionary<CandleTimeInterval, TimeSpan>
             {
-                [CandleTimeInterval.Sec]    = TimeSpan.FromHours(2),
-                [CandleTimeInterval.Minute] = TimeSpan.FromDays(6),
-                [CandleTimeInterval.Min5]   = TimeSpan.FromDays(34),
-                [CandleTimeInterval.Min15]  = TimeSpan.FromDays(104),
-                [CandleTimeInterval.Min30]  = TimeSpan.FromDays(208),
-                [CandleTimeInterval.Hour]   = TimeSpan.FromDays(416),
-                [CandleTimeInterval.Hour4]  = TimeSpan.FromDays(1666),
-                [CandleTimeInterval.Hour6]  = TimeSpan.FromDays(2499),
-                [CandleTimeInterval.Hour12] = TimeSpan.FromDays(4999)
+                [CandleTimeInterval.Unspecified]    = TimeSpan.FromSeconds(-1),
+                [CandleTimeInterval.Sec]            = TimeSpan.FromHours(2),
+                [CandleTimeInterval.Minute]         = TimeSpan.FromDays(6),
+                [CandleTimeInterval.Min5]           = TimeSpan.FromDays(34),
+                [CandleTimeInterval.Min15]          = TimeSpan.FromDays(104),
+                [CandleTimeInterval.Min30]          = TimeSpan.FromDays(208),
+                [CandleTimeInterval.Hour]           = TimeSpan.FromDays(416),
+                [CandleTimeInterval.Hour4]          = TimeSpan.FromDays(1666),
+                [CandleTimeInterval.Hour6]          = TimeSpan.FromDays(2499),
+                [CandleTimeInterval.Hour12]         = TimeSpan.FromDays(4999)
             };
 
         private static readonly Dictionary<CSharp.AlgoTemplate.Models.Enumerators.CandleTimeInterval, CandleTimeInterval>
             _candleIntervalMap = new Dictionary<CSharp.AlgoTemplate.Models.Enumerators.CandleTimeInterval, CandleTimeInterval>
             {
-                [CSharp.AlgoTemplate.Models.Enumerators.CandleTimeInterval.Sec]     = CandleTimeInterval.Sec,
-                [CSharp.AlgoTemplate.Models.Enumerators.CandleTimeInterval.Minute]  = CandleTimeInterval.Minute,
-                [CSharp.AlgoTemplate.Models.Enumerators.CandleTimeInterval.Min5]    = CandleTimeInterval.Min5,
-                [CSharp.AlgoTemplate.Models.Enumerators.CandleTimeInterval.Min15]   = CandleTimeInterval.Min15,
-                [CSharp.AlgoTemplate.Models.Enumerators.CandleTimeInterval.Min30]   = CandleTimeInterval.Min30,
-                [CSharp.AlgoTemplate.Models.Enumerators.CandleTimeInterval.Hour]    = CandleTimeInterval.Hour,
-                [CSharp.AlgoTemplate.Models.Enumerators.CandleTimeInterval.Hour4]   = CandleTimeInterval.Hour4,
-                [CSharp.AlgoTemplate.Models.Enumerators.CandleTimeInterval.Hour6]   = CandleTimeInterval.Hour6,
-                [CSharp.AlgoTemplate.Models.Enumerators.CandleTimeInterval.Hour12]  = CandleTimeInterval.Hour12,
-                [CSharp.AlgoTemplate.Models.Enumerators.CandleTimeInterval.Day]     = CandleTimeInterval.Day,
-                [CSharp.AlgoTemplate.Models.Enumerators.CandleTimeInterval.Week]    = CandleTimeInterval.Week,
-                [CSharp.AlgoTemplate.Models.Enumerators.CandleTimeInterval.Month]   = CandleTimeInterval.Month,
+                [CSharp.AlgoTemplate.Models.Enumerators.CandleTimeInterval.Unspecified] = CandleTimeInterval.Unspecified,
+                [CSharp.AlgoTemplate.Models.Enumerators.CandleTimeInterval.Sec]         = CandleTimeInterval.Sec,
+                [CSharp.AlgoTemplate.Models.Enumerators.CandleTimeInterval.Minute]      = CandleTimeInterval.Minute,
+                [CSharp.AlgoTemplate.Models.Enumerators.CandleTimeInterval.Min5]        = CandleTimeInterval.Min5,
+                [CSharp.AlgoTemplate.Models.Enumerators.CandleTimeInterval.Min15]       = CandleTimeInterval.Min15,
+                [CSharp.AlgoTemplate.Models.Enumerators.CandleTimeInterval.Min30]       = CandleTimeInterval.Min30,
+                [CSharp.AlgoTemplate.Models.Enumerators.CandleTimeInterval.Hour]        = CandleTimeInterval.Hour,
+                [CSharp.AlgoTemplate.Models.Enumerators.CandleTimeInterval.Hour4]       = CandleTimeInterval.Hour4,
+                [CSharp.AlgoTemplate.Models.Enumerators.CandleTimeInterval.Hour6]       = CandleTimeInterval.Hour6,
+                [CSharp.AlgoTemplate.Models.Enumerators.CandleTimeInterval.Hour12]      = CandleTimeInterval.Hour12,
+                [CSharp.AlgoTemplate.Models.Enumerators.CandleTimeInterval.Day]         = CandleTimeInterval.Day,
+                [CSharp.AlgoTemplate.Models.Enumerators.CandleTimeInterval.Week]        = CandleTimeInterval.Week,
+                [CSharp.AlgoTemplate.Models.Enumerators.CandleTimeInterval.Month]       = CandleTimeInterval.Month,
             };
 
         private readonly ICandleshistoryservice _candlesHistoryService;
@@ -54,36 +55,48 @@ namespace Lykke.AlgoStore.Service.History.Services
 
         private bool Validate(
             CandleRequest request, 
-            FunctionParamsBase functionParams, 
+            IndicatorData indicatorData, 
             IErrorDictionary errorDictionary)
         {
             if (request.StartFrom >= request.EndOn)
                 errorDictionary.Add(nameof(request.StartFrom), 
                     $"{nameof(request.StartFrom)} must be before {nameof(request.EndOn)}");
 
-            if (functionParams == null)
+            if (indicatorData == null)
             {
                 errorDictionary.Add(nameof(request.IndicatorName), "Unknown indicator name");
                 return false;
             }
 
-            if (functionParams.StartingDate > request.StartFrom)
+            if (indicatorData.StartDate.HasValue && indicatorData.StartDate > request.StartFrom)
                 errorDictionary.Add(nameof(request.StartFrom),
                     $"{nameof(request.StartFrom)} must be after indicator start date");
 
-            if (functionParams.EndingDate < request.StartFrom)
+            if (indicatorData.EndDate.HasValue && indicatorData.EndDate < request.StartFrom)
                 errorDictionary.Add(nameof(request.StartFrom),
                     $"{nameof(request.StartFrom)} must be before indicator end date");
 
-            if (functionParams.StartingDate > request.EndOn)
+            if (indicatorData.StartDate.HasValue && indicatorData.StartDate > request.EndOn)
                 errorDictionary.Add(nameof(request.StartFrom),
                     $"{nameof(request.EndOn)} must be after indicator start date");
 
-            if (functionParams.EndingDate < request.EndOn)
+            if (indicatorData.EndDate.HasValue && indicatorData.EndDate < request.EndOn)
                 errorDictionary.Add(nameof(request.StartFrom),
                     $"{nameof(request.EndOn)} must be before indicator end date");
 
-            var cti = _candleIntervalMap[functionParams.CandleTimeInterval];
+            if (indicatorData.AssetPair != null && request.AssetPair != indicatorData.AssetPair)
+                errorDictionary.Add(nameof(request.AssetPair),
+                    $"{nameof(request.AssetPair)} must match the indicator asset pair");
+
+            if (indicatorData.CandleTimeInterval != CSharp.AlgoTemplate.Models.Enumerators.CandleTimeInterval.Unspecified 
+                && request.CandleTimeInterval != indicatorData.CandleTimeInterval)
+                errorDictionary.Add(nameof(request.CandleTimeInterval),
+                    $"{nameof(request.CandleTimeInterval)} must match the indicator candle time interval");
+
+            if (indicatorData.CandleTimeInterval == CSharp.AlgoTemplate.Models.Enumerators.CandleTimeInterval.Unspecified)
+                indicatorData.CandleTimeInterval = request.CandleTimeInterval;
+
+            var cti = _candleIntervalMap[indicatorData.CandleTimeInterval];
 
             if (_maxAllowedPeriods.ContainsKey(cti) &&
                 _maxAllowedPeriods[cti] < request.EndOn - request.StartFrom)
@@ -104,13 +117,13 @@ namespace Lykke.AlgoStore.Service.History.Services
             if (errorDictionary == null)
                 throw new ArgumentNullException(nameof(errorDictionary));
 
-            var functionParams = instanceData.GetParamsForIndicator(request.IndicatorName);
+            var indicatorData = instanceData.GetParamsForIndicator(request.IndicatorName);
 
-            if (!Validate(request, functionParams, errorDictionary))
+            if (!Validate(request, indicatorData, errorDictionary))
                 return null;
 
             var responseTask = _candlesHistoryService.GetCandlesHistoryOrErrorWithHttpMessagesAsync(
-                functionParams.AssetPair, CandlePriceType.Mid, _candleIntervalMap[functionParams.CandleTimeInterval],
+                request.AssetPair, CandlePriceType.Mid, _candleIntervalMap[request.CandleTimeInterval],
                 request.StartFrom, request.EndOn);
             var timeOutTask = Task.Delay(10_000);
 
