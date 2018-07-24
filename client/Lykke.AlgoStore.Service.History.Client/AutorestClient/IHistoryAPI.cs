@@ -39,6 +39,14 @@ namespace Lykke.AlgoStore.Service.History.Client.AutorestClient
         /// <param name='endOn'>
         /// The end of the period to get candles for (exclusive)
         /// </param>
+        /// <param name='assetPair'>
+        /// The asset pair to get candles for
+        /// </param>
+        /// <param name='candleTimeInterval'>
+        /// The candle time interval to get candles for. Possible values
+        /// include: 'Unspecified', 'Sec', 'Minute', 'Min5', 'Min15', 'Min30',
+        /// 'Hour', 'Hour4', 'Hour6', 'Hour12', 'Day', 'Week', 'Month'
+        /// </param>
         /// <param name='indicatorName'>
         /// The name of the indicator to fetch candles for
         /// </param>
@@ -48,7 +56,7 @@ namespace Lykke.AlgoStore.Service.History.Client.AutorestClient
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<object>> GetCandlesWithHttpMessagesAsync(System.DateTime startFrom, System.DateTime endOn, string indicatorName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<object>> GetCandlesWithHttpMessagesAsync(System.DateTime startFrom, System.DateTime endOn, string assetPair, CandleTimeInterval candleTimeInterval, string indicatorName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Checks service is alive
