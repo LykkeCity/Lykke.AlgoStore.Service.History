@@ -24,12 +24,20 @@ namespace Lykke.AlgoStore.Service.History.Client.AutorestClient
             /// <param name='endOn'>
             /// The end of the period to get candles for (exclusive)
             /// </param>
+            /// <param name='assetPair'>
+            /// The asset pair to get candles for
+            /// </param>
+            /// <param name='candleTimeInterval'>
+            /// The candle time interval to get candles for. Possible values include:
+            /// 'Unspecified', 'Sec', 'Minute', 'Min5', 'Min15', 'Min30', 'Hour', 'Hour4',
+            /// 'Hour6', 'Hour12', 'Day', 'Week', 'Month'
+            /// </param>
             /// <param name='indicatorName'>
             /// The name of the indicator to fetch candles for
             /// </param>
-            public static object GetCandles(this IHistoryAPI operations, System.DateTime startFrom, System.DateTime endOn, string indicatorName)
+            public static object GetCandles(this IHistoryAPI operations, System.DateTime startFrom, System.DateTime endOn, string assetPair, CandleTimeInterval candleTimeInterval, string indicatorName)
             {
-                return operations.GetCandlesAsync(startFrom, endOn, indicatorName).GetAwaiter().GetResult();
+                return operations.GetCandlesAsync(startFrom, endOn, assetPair, candleTimeInterval, indicatorName).GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -41,15 +49,23 @@ namespace Lykke.AlgoStore.Service.History.Client.AutorestClient
             /// <param name='endOn'>
             /// The end of the period to get candles for (exclusive)
             /// </param>
+            /// <param name='assetPair'>
+            /// The asset pair to get candles for
+            /// </param>
+            /// <param name='candleTimeInterval'>
+            /// The candle time interval to get candles for. Possible values include:
+            /// 'Unspecified', 'Sec', 'Minute', 'Min5', 'Min15', 'Min30', 'Hour', 'Hour4',
+            /// 'Hour6', 'Hour12', 'Day', 'Week', 'Month'
+            /// </param>
             /// <param name='indicatorName'>
             /// The name of the indicator to fetch candles for
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> GetCandlesAsync(this IHistoryAPI operations, System.DateTime startFrom, System.DateTime endOn, string indicatorName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> GetCandlesAsync(this IHistoryAPI operations, System.DateTime startFrom, System.DateTime endOn, string assetPair, CandleTimeInterval candleTimeInterval, string indicatorName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetCandlesWithHttpMessagesAsync(startFrom, endOn, indicatorName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetCandlesWithHttpMessagesAsync(startFrom, endOn, assetPair, candleTimeInterval, indicatorName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

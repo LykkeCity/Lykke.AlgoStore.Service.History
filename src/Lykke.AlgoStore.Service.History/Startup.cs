@@ -11,21 +11,15 @@ using Lykke.AlgoStore.Service.History.Utils;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Lykke.SettingsReader;
+using Lykke.AlgoStore.Service.History.Modules;
 
 namespace Lykke.AlgoStore.Service.History
 {
     public class Startup
     {
-        public IConfigurationRoot Configuration { get; }
-
         public Startup(IHostingEnvironment env)
         {
             InitMapper();
-
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(env.ContentRootPath)
-                .AddEnvironmentVariables();
-            Configuration = builder.Build();
         }
 
         public static void InitMapper()
@@ -41,14 +35,18 @@ namespace Lykke.AlgoStore.Service.History
 
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            var appSettings = Configuration.LoadSettings<AppSettings>();
-
-            services.AddInstanceAuthentication(appSettings.Nested(x => x.AlgoStoreHistoryService.InstanceAuthSettings)
-                                                          .CurrentValue);
-
             return services.BuildServiceProvider<AppSettings>(options =>
             {
-                options.ApiTitle = "History API";
+                options.SwaggerOptions = new LykkeSwaggerOptions
+                {
+                    ApiTitle = "History API",
+                    ApiVersion = "v1"
+                };
+                options.Extend = (collection, appSettings) =>
+                {
+                    collection.AddInstanceAuthentication(appSettings.Nested(x => x.AlgoStoreHistoryService.InstanceAuthSettings)
+                                                          .CurrentValue);
+                };
                 options.Logs = logs =>
                 {
                     logs.AzureTableName = "HistoryLog";

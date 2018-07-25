@@ -23,7 +23,9 @@ namespace Lykke.AlgoStore.Service.History.Client
 
         public async Task<IEnumerable<Candle>> GetCandles(
             DateTime from, 
-            DateTime to, 
+            DateTime to,
+            string assetPair,
+            Models.CandleTimeInterval timeInterval,
             string indicatorName, 
             string authToken)
         {
@@ -33,7 +35,8 @@ namespace Lykke.AlgoStore.Service.History.Client
                 throw new ArgumentNullException(nameof(authToken));
 
             using (var operationResponse = await _historyApi
-                .GetCandlesWithHttpMessagesAsync(from, to, indicatorName, GetHeaders(authToken)))
+                .GetCandlesWithHttpMessagesAsync(from, to, assetPair,
+                    timeInterval.ToString().ParseCandleTimeInterval().Value, indicatorName, GetHeaders(authToken)))
             {
                 if (operationResponse.Response.StatusCode == System.Net.HttpStatusCode.OK)
                     return ((IList<CandleModel>)operationResponse.Body).Select(c => c.ToCandle());
@@ -42,7 +45,7 @@ namespace Lykke.AlgoStore.Service.History.Client
                 {
                     var errors = ((ErrorResponseModel)operationResponse.Body);
                     var exceptions = errors.Errors.Select(e => new ArgumentException(e));
-                    throw new AggregateException("There were validation errors. See inner exceptions for details.", 
+                    throw new AggregateException("There were validation errors. See inner exceptions for details.",
                                                  exceptions);
                 }
 

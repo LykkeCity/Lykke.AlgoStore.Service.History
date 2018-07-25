@@ -146,6 +146,14 @@ namespace Lykke.AlgoStore.Service.History.Client.AutorestClient
         /// <param name='endOn'>
         /// The end of the period to get candles for (exclusive)
         /// </param>
+        /// <param name='assetPair'>
+        /// The asset pair to get candles for
+        /// </param>
+        /// <param name='candleTimeInterval'>
+        /// The candle time interval to get candles for. Possible values include:
+        /// 'Unspecified', 'Sec', 'Minute', 'Min5', 'Min15', 'Min30', 'Hour', 'Hour4',
+        /// 'Hour6', 'Hour12', 'Day', 'Week', 'Month'
+        /// </param>
         /// <param name='indicatorName'>
         /// The name of the indicator to fetch candles for
         /// </param>
@@ -170,8 +178,12 @@ namespace Lykke.AlgoStore.Service.History.Client.AutorestClient
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> GetCandlesWithHttpMessagesAsync(System.DateTime startFrom, System.DateTime endOn, string indicatorName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> GetCandlesWithHttpMessagesAsync(System.DateTime startFrom, System.DateTime endOn, string assetPair, CandleTimeInterval candleTimeInterval, string indicatorName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (assetPair == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "assetPair");
+            }
             if (indicatorName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "indicatorName");
@@ -185,6 +197,8 @@ namespace Lykke.AlgoStore.Service.History.Client.AutorestClient
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("startFrom", startFrom);
                 tracingParameters.Add("endOn", endOn);
+                tracingParameters.Add("assetPair", assetPair);
+                tracingParameters.Add("candleTimeInterval", candleTimeInterval);
                 tracingParameters.Add("indicatorName", indicatorName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetCandles", tracingParameters);
@@ -195,6 +209,11 @@ namespace Lykke.AlgoStore.Service.History.Client.AutorestClient
             List<string> _queryParameters = new List<string>();
             _queryParameters.Add(string.Format("StartFrom={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(startFrom, SerializationSettings).Trim('"'))));
             _queryParameters.Add(string.Format("EndOn={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(endOn, SerializationSettings).Trim('"'))));
+            if (assetPair != null)
+            {
+                _queryParameters.Add(string.Format("AssetPair={0}", System.Uri.EscapeDataString(assetPair)));
+            }
+            _queryParameters.Add(string.Format("CandleTimeInterval={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(candleTimeInterval, SerializationSettings).Trim('"'))));
             if (indicatorName != null)
             {
                 _queryParameters.Add(string.Format("IndicatorName={0}", System.Uri.EscapeDataString(indicatorName)));
