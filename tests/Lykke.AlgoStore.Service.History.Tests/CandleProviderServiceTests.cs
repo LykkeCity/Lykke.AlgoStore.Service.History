@@ -25,9 +25,9 @@ namespace Lykke.AlgoStore.Service.History.Tests
                 {
                     new AlgoMetaDataFunction
                     {
+                        Id = "func",
                         Parameters = new List<AlgoMetaDataParameter>
                         {
-                            new AlgoMetaDataParameter { Key = "FunctionInstanceIdentifier", Value = "func" },
                             new AlgoMetaDataParameter { Key = "CandleTimeInterval", Value = "Sec"},
                             new AlgoMetaDataParameter { Key = "AssetPair", Value = "BTCUSD" },
                             new AlgoMetaDataParameter { Key = "StartingDate", Value= "2018-01-01T00:00:00Z" },
@@ -82,7 +82,9 @@ namespace Lykke.AlgoStore.Service.History.Tests
             {
                 StartFrom = new DateTime(2018, 1, 2, 0, 1, 0),
                 EndOn = new DateTime(2018, 1, 2, 0, 0, 0),
-                IndicatorName = "func"
+                CandleTimeInterval = CSharp.AlgoTemplate.Models.Enumerators.CandleTimeInterval.Sec,
+                AssetPair = "BTCUSD",
+                IndicatorName = "func",
             };
 
             await ValidateHasErrors_ForGivenRequest(request);
@@ -113,6 +115,8 @@ namespace Lykke.AlgoStore.Service.History.Tests
             {
                 StartFrom = new DateTime(2017, 1, 2, 0, 1, 0),
                 EndOn = new DateTime(2018, 1, 2, 0, 0, 0),
+                CandleTimeInterval = CSharp.AlgoTemplate.Models.Enumerators.CandleTimeInterval.Sec,
+                AssetPair = "BTCUSD",
                 IndicatorName = "func"
             };
 
@@ -126,6 +130,8 @@ namespace Lykke.AlgoStore.Service.History.Tests
             {
                 StartFrom = new DateTime(2018, 1, 2, 0, 0, 0),
                 EndOn = new DateTime(2017, 1, 2, 0, 1, 0),
+                CandleTimeInterval = CSharp.AlgoTemplate.Models.Enumerators.CandleTimeInterval.Sec,
+                AssetPair = "BTCUSD",
                 IndicatorName = "func"
             };
 
@@ -139,6 +145,8 @@ namespace Lykke.AlgoStore.Service.History.Tests
             {
                 StartFrom = new DateTime(2019, 1, 2, 0, 0, 0),
                 EndOn = new DateTime(2018, 1, 2, 0, 1, 0),
+                CandleTimeInterval = CSharp.AlgoTemplate.Models.Enumerators.CandleTimeInterval.Sec,
+                AssetPair = "BTCUSD",
                 IndicatorName = "func"
             };
 
@@ -152,6 +160,8 @@ namespace Lykke.AlgoStore.Service.History.Tests
             {
                 StartFrom = new DateTime(2018, 1, 2, 0, 0, 0),
                 EndOn = new DateTime(2019, 1, 2, 0, 1, 0),
+                CandleTimeInterval = CSharp.AlgoTemplate.Models.Enumerators.CandleTimeInterval.Sec,
+                AssetPair = "BTCUSD",
                 IndicatorName = "func"
             };
 
@@ -172,6 +182,8 @@ namespace Lykke.AlgoStore.Service.History.Tests
             {
                 StartFrom = new DateTime(2018, 1, 2, 0, 0, 0),
                 EndOn = new DateTime(2018, 1, 2, 0, 1, 0),
+                CandleTimeInterval = CSharp.AlgoTemplate.Models.Enumerators.CandleTimeInterval.Day,
+                AssetPair = "BTCUSD",
                 IndicatorName = "algo"
             };
 
@@ -208,6 +220,8 @@ namespace Lykke.AlgoStore.Service.History.Tests
             {
                 StartFrom = new DateTime(2018, 1, 2, 0, 0, 0),
                 EndOn = new DateTime(2018, 1, 2, 0, 1, 0),
+                CandleTimeInterval = CSharp.AlgoTemplate.Models.Enumerators.CandleTimeInterval.Day,
+                AssetPair = "BTCUSD",
                 IndicatorName = "algo"
             };
 

@@ -6,8 +6,8 @@
     <Version>1.0.0</Version>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Lykke.AlgoStore.CSharp.AlgoTemplate.Models" Version="1.0.65" />
-    <PackageReference Include="Lykke.Common" Version="7.0.1" />
+    <PackageReference Include="Lykke.AlgoStore.CSharp.AlgoTemplate.Models" Version="1.0.70" />
+    <PackageReference Include="Lykke.Common" Version="7.0.2" />
     <PackageReference Include="Lykke.Service.CandlesHistory.Client" Version="2.1.1" />
   </ItemGroup>
 </Project>
