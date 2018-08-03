@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Lykke.AlgoStore.Service.History.Client.AutorestClient.Models;
+using CandleTimeInterval = Lykke.AlgoStore.Service.History.Client.Models.CandleTimeInterval;
 
 namespace Lykke.AlgoStore.Service.History.Client
 {
@@ -38,5 +40,11 @@ namespace Lykke.AlgoStore.Service.History.Client
             CandleTimeInterval timeInterval,
             string indicatorName, 
             string authToken);
+
+
+        Task<IEnumerable<FunctionChartingUpdate>> GetFunctionValues(
+            string instanceId,
+            DateTime from,
+            DateTime to);
     }
 }
