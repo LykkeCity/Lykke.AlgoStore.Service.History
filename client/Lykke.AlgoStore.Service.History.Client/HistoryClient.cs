@@ -60,6 +60,34 @@ namespace Lykke.AlgoStore.Service.History.Client
             }
         }
 
+        public async Task<IEnumerable<FunctionChartingUpdate>> GetFunctionValues(string instanceId, DateTime @from, DateTime to)
+        {
+            if (string.IsNullOrEmpty(instanceId))
+                throw new ArgumentNullException(nameof(instanceId));
+
+            using (var operationResponse = await _historyApi.GetFunctionForPeriodWithHttpMessagesAsync(from, to, instanceId))
+            {
+                if (operationResponse.Response.StatusCode == System.Net.HttpStatusCode.OK)
+                    return ((IList<FunctionChartingUpdate>)operationResponse.Body).Select(c => c);
+
+                if (operationResponse.Response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                {
+                    var errors = ((ErrorResponseModel)operationResponse.Body);
+                    var exceptions = errors.Errors.Select(e => new ArgumentException(e));
+                    throw new AggregateException("There were validation errors. See inner exceptions for details.", exceptions);
+                }
+
+                var message = (int)operationResponse.Response.StatusCode == 429 ?
+                    "Rate limited" :
+                    "Service unavailable";
+
+                throw new HttpOperationException(message)
+                {
+                    Response = new HttpResponseMessageWrapper(operationResponse.Response, "")
+                };
+            }
+        }
+
         public void Dispose()
         {
             _historyApi?.Dispose();

@@ -8,13 +8,14 @@ namespace Lykke.AlgoStore.Service.History.Client.AutorestClient.Models
 {
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
+    using System.Runtime;
     using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for CandleTimeInterval.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
-    internal enum CandleTimeInterval
+    public enum CandleTimeInterval
     {
         [EnumMember(Value = "Unspecified")]
         Unspecified,
