@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using AutoMapper;
 using Common.Log;
 using Lykke.AlgoStore.Algo.Charting;
 using Lykke.AlgoStore.Security.InstanceAuth;
 using Lykke.AlgoStore.Service.History.Core.Services;
 using Lykke.AlgoStore.Service.History.Models;
-using Lykke.AlgoStore.Service.History.Services;
 using Lykke.AlgoStore.Service.History.Utils;
 using Lykke.Common.Log;
 using Microsoft.AspNetCore.Authorization;
@@ -19,7 +16,7 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Lykke.AlgoStore.Service.History.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [RateLimit]
     [Route("api/v1/functions")]
     public class FunctionsController :  Controller
@@ -41,12 +38,15 @@ namespace Lykke.AlgoStore.Service.History.Controllers
         [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
         public async Task<IActionResult> GetFunctionsForPeriod([Required]string instanceId, DateTime from, DateTime to)
         {
+            _log.Info(nameof(GetFunctionsForPeriod), $"Request for instanceId {instanceId}, from {from}, to: {to}", context: nameof(GetFunctionsForPeriod));
+
             if (!ModelState.IsValid)
+            {
                 return BadRequest(ErrorResponseModel.CreateFromModelState(ModelState));
+            }
 
             try
             {
-
                 var functions = await _functionsService.GetFunctionChartingUpdateForPeriodAsync(instanceId,from,to, new ModelStateWrapper(ModelState));
 
                 if (!ModelState.IsValid)
