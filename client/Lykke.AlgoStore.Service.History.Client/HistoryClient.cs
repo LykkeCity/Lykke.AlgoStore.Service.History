@@ -60,12 +60,14 @@ namespace Lykke.AlgoStore.Service.History.Client
             }
         }
 
-        public async Task<IEnumerable<FunctionChartingUpdate>> GetFunctionValues(string instanceId, DateTime @from, DateTime to)
+        public async Task<IEnumerable<FunctionChartingUpdate>> GetFunctionValues(string instanceId, DateTime @from, DateTime to, string authToken)
         {
             if (string.IsNullOrEmpty(instanceId))
                 throw new ArgumentNullException(nameof(instanceId));
+            if (string.IsNullOrEmpty(authToken))
+                throw new ArgumentNullException(nameof(authToken));
 
-            using (var operationResponse = await _historyApi.GetFunctionForPeriodWithHttpMessagesAsync(from, to, instanceId))
+            using (var operationResponse = await _historyApi.GetFunctionForPeriodWithHttpMessagesAsync(from, to, instanceId, GetHeaders(authToken)))
             {
                 if (operationResponse.Response.StatusCode == System.Net.HttpStatusCode.OK)
                     return ((IList<FunctionChartingUpdate>)operationResponse.Body).Select(c => c);

@@ -45,6 +45,7 @@ namespace Lykke.AlgoStore.Service.History.Client
         Task<IEnumerable<FunctionChartingUpdate>> GetFunctionValues(
             string instanceId,
             DateTime from,
-            DateTime to);
+            DateTime to,
+            string authToken);
     }
 }
