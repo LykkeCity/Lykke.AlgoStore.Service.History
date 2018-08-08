@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using AzureStorage;
 using Lykke.AlgoStore.Algo.Charting;
@@ -23,12 +24,12 @@ namespace Lykke.AlgoStore.Service.History.Services
             _repo = repo;
         }
 
-        public async Task<IEnumerable<FunctionChartingUpdate>> GetFunctionChartingUpdateForPeriodAsync(string instanceId, DateTime fromMoment, DateTime toMoment, IErrorDictionary errorDictionary)
+        public async Task<IEnumerable<FunctionChartingUpdate>> GetFunctionChartingUpdateForPeriodAsync(string instanceId, DateTime fromMoment, DateTime toMoment, IErrorDictionary errorDictionary, CancellationToken ct)
         {
             if (!Validate(instanceId, fromMoment, toMoment, errorDictionary))
                 return null;
 
-            var functions = await _repo.GetFunctionChartingUpdateForPeriodAsync(instanceId, fromMoment, toMoment);
+            var functions = await _repo.GetFunctionChartingUpdateForPeriodAsync(instanceId, fromMoment, toMoment, ct);
 
             var result = functions.Select(AutoMapper.Mapper.Map<FunctionChartingUpdate>);
 

@@ -75,8 +75,11 @@ namespace Lykke.AlgoStore.Service.History.Client
                 if (operationResponse.Response.StatusCode == System.Net.HttpStatusCode.BadRequest)
                 {
                     var errors = ((ErrorResponseModel)operationResponse.Body);
-                    var exceptions = errors.Errors.Select(e => new ArgumentException(e));
-                    throw new AggregateException("There were validation errors. See inner exceptions for details.", exceptions);
+                    var errorList = String.Join(",", errors.Errors);
+                    throw new HttpOperationException()
+                    {
+                        Response = new HttpResponseMessageWrapper(operationResponse.Response, errorList)
+                    };
                 }
 
                 var message = (int)operationResponse.Response.StatusCode == 429 ?
