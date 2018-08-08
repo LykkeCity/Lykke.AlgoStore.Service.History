@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using Common.Log;
 using Lykke.AlgoStore.Algo.Charting;
@@ -47,12 +48,20 @@ namespace Lykke.AlgoStore.Service.History.Controllers
 
             try
             {
-                var functions = await _functionsService.GetFunctionChartingUpdateForPeriodAsync(instanceId,from,to, new ModelStateWrapper(ModelState));
+                var cts = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+                var functions = await _functionsService.GetFunctionChartingUpdateForPeriodAsync(instanceId,from,to, new ModelStateWrapper(ModelState), cts.Token);
 
                 if (!ModelState.IsValid)
                     return BadRequest(ErrorResponseModel.CreateFromModelState(ModelState));
 
                 return Ok(functions);
+            }
+            catch (TaskCanceledException)
+            {
+                var errorMsg = "Couldn't complete the request withing the time allowed, possibly due to high number of functions found.";
+                await _log.WriteWarningAsync(nameof(GetFunctionsForPeriod), instanceId, $"Timout. Request for Get functions from {from} to {to}. {errorMsg} ");
+                ModelState.AddModelError("RequestTimeOut", errorMsg);
+                return BadRequest(ErrorResponseModel.CreateFromModelState(ModelState));
             }
             catch (Exception ex)
             {
