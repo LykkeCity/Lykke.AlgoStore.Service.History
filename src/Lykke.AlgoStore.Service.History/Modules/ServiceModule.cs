@@ -41,13 +41,20 @@ namespace Lykke.AlgoStore.Service.History.Modules
             builder.RegisterInstance(AzureTableStorage<FunctionChartingUpdateEntity>
                 .Create(reloadingDbManager, FunctionChartingUpdateRepository.TableName, tempLog));
 
+            builder.RegisterInstance(AzureTableStorage<QuoteChartingUpdateEntity>
+                .Create(reloadingDbManager, QuoteChartingUpdateRepository.TableName, tempLog));
+
             builder.RegisterType<AlgoClientInstanceRepository>().As<IAlgoClientInstanceRepository>();
 
             builder.RegisterType<FunctionChartingUpdateRepository>().As<IFunctionChartingUpdateRepository>();
 
+            builder.RegisterType<QuoteChartingUpdateRepository>().As<IQuoteChartingUpdateRepository>();
+
             builder.RegisterType<CandleProviderService>().As<ICandleProviderService>();
 
             builder.RegisterType<FunctionChartingUpdateService>().As<IFunctionChartingUpdateService>();
+
+            builder.RegisterType<QuoteChartingUpdateService>().As<IQuoteChartingUpdateService>();
 
             builder.RegisterInstance(_appSettings.CurrentValue.AlgoStoreHistoryService.RateLimitSettings)
                 .AsSelf()

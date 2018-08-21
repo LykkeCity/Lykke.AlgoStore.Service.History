@@ -19,6 +19,16 @@
             Gets or sets json deserialization settings.
             </summary>
         </member>
+        <member name="M:Lykke.AlgoStore.Service.History.Client.AutorestClient.HistoryAPI.#ctor(System.Net.Http.HttpClient,System.Boolean)">
+            <summary>
+            Initializes a new instance of the HistoryAPI class.
+            </summary>
+            <param name='httpClient'>
+            HttpClient to be used
+            </param>
+            <param name='disposeHttpClient'>
+            True: will dispose the provided httpClient on calling HistoryAPI.Dispose(). False: will not dispose provided httpClient</param>
+        </member>
         <member name="M:Lykke.AlgoStore.Service.History.Client.AutorestClient.HistoryAPI.#ctor(System.Net.Http.DelegatingHandler[])">
             <summary>
             Initializes a new instance of the HistoryAPI class.
@@ -157,6 +167,33 @@
             A response object containing the response body and response headers.
             </return>
         </member>
+        <member name="M:Lykke.AlgoStore.Service.History.Client.AutorestClient.HistoryAPI.GetQuotesForPeriodWithHttpMessagesAsync(System.DateTime,System.DateTime,System.String,System.String,System.Nullable{System.Boolean},System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.List{System.String}},System.Threading.CancellationToken)">
+            <param name='fromParameter'>
+            </param>
+            <param name='to'>
+            </param>
+            <param name='instanceId'>
+            </param>
+            <param name='asetPair'>
+            </param>
+            <param name='isBuy'>
+            </param>
+            <param name='customHeaders'>
+            Headers that will be added to request.
+            </param>
+            <param name='cancellationToken'>
+            The cancellation token.
+            </param>
+            <exception cref="T:Microsoft.Rest.HttpOperationException">
+            Thrown when the operation returned an invalid status code
+            </exception>
+            <exception cref="T:Microsoft.Rest.SerializationException">
+            Thrown when unable to deserialize the response
+            </exception>
+            <return>
+            A response object containing the response body and response headers.
+            </return>
+        </member>
         <member name="T:Lykke.AlgoStore.Service.History.Client.AutorestClient.HistoryAPIExtensions">
             <summary>
             Extension methods for HistoryAPI.
@@ -253,6 +290,39 @@
             The cancellation token.
             </param>
         </member>
+        <member name="M:Lykke.AlgoStore.Service.History.Client.AutorestClient.HistoryAPIExtensions.GetQuotesForPeriod(Lykke.AlgoStore.Service.History.Client.AutorestClient.IHistoryAPI,System.DateTime,System.DateTime,System.String,System.String,System.Nullable{System.Boolean})">
+            <param name='operations'>
+            The operations group for this extension method.
+            </param>
+            <param name='fromParameter'>
+            </param>
+            <param name='to'>
+            </param>
+            <param name='instanceId'>
+            </param>
+            <param name='asetPair'>
+            </param>
+            <param name='isBuy'>
+            </param>
+        </member>
+        <member name="M:Lykke.AlgoStore.Service.History.Client.AutorestClient.HistoryAPIExtensions.GetQuotesForPeriodAsync(Lykke.AlgoStore.Service.History.Client.AutorestClient.IHistoryAPI,System.DateTime,System.DateTime,System.String,System.String,System.Nullable{System.Boolean},System.Threading.CancellationToken)">
+            <param name='operations'>
+            The operations group for this extension method.
+            </param>
+            <param name='fromParameter'>
+            </param>
+            <param name='to'>
+            </param>
+            <param name='instanceId'>
+            </param>
+            <param name='asetPair'>
+            </param>
+            <param name='isBuy'>
+            </param>
+            <param name='cancellationToken'>
+            The cancellation token.
+            </param>
+        </member>
         <member name="T:Lykke.AlgoStore.Service.History.Client.AutorestClient.IHistoryAPI">
             <summary>
             </summary>
@@ -315,6 +385,24 @@
             <summary>
             Checks service is alive
             </summary>
+            <param name='customHeaders'>
+            The headers that will be added to request.
+            </param>
+            <param name='cancellationToken'>
+            The cancellation token.
+            </param>
+        </member>
+        <member name="M:Lykke.AlgoStore.Service.History.Client.AutorestClient.IHistoryAPI.GetQuotesForPeriodWithHttpMessagesAsync(System.DateTime,System.DateTime,System.String,System.String,System.Nullable{System.Boolean},System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.List{System.String}},System.Threading.CancellationToken)">
+            <param name='fromParameter'>
+            </param>
+            <param name='to'>
+            </param>
+            <param name='instanceId'>
+            </param>
+            <param name='asetPair'>
+            </param>
+            <param name='isBuy'>
+            </param>
             <param name='customHeaders'>
             The headers that will be added to request.
             </param>
@@ -489,6 +577,52 @@
             Thrown if validation fails
             </exception>
         </member>
+        <member name="M:Lykke.AlgoStore.Service.History.Client.AutorestClient.Models.QuoteChartingUpdate.#ctor">
+            <summary>
+            Initializes a new instance of the QuoteChartingUpdate class.
+            </summary>
+        </member>
+        <member name="M:Lykke.AlgoStore.Service.History.Client.AutorestClient.Models.QuoteChartingUpdate.#ctor(System.Boolean,System.Double,System.DateTime,System.DateTime,System.Boolean,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the QuoteChartingUpdate class.
+            </summary>
+        </member>
+        <member name="P:Lykke.AlgoStore.Service.History.Client.AutorestClient.Models.QuoteChartingUpdate.IsBuy">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Lykke.AlgoStore.Service.History.Client.AutorestClient.Models.QuoteChartingUpdate.Price">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Lykke.AlgoStore.Service.History.Client.AutorestClient.Models.QuoteChartingUpdate.Timestamp">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Lykke.AlgoStore.Service.History.Client.AutorestClient.Models.QuoteChartingUpdate.DateReceived">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Lykke.AlgoStore.Service.History.Client.AutorestClient.Models.QuoteChartingUpdate.IsOnline">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Lykke.AlgoStore.Service.History.Client.AutorestClient.Models.QuoteChartingUpdate.InstanceId">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Lykke.AlgoStore.Service.History.Client.AutorestClient.Models.QuoteChartingUpdate.AssetPair">
+            <summary>
+            </summary>
+        </member>
+        <member name="M:Lykke.AlgoStore.Service.History.Client.AutorestClient.Models.QuoteChartingUpdate.Validate">
+            <summary>
+            Validate the object.
+            </summary>
+            <exception cref="T:Microsoft.Rest.ValidationException">
+            Thrown if validation fails
+            </exception>
+        </member>
         <member name="T:Lykke.AlgoStore.Service.History.Client.ContainerBuilderExtensions">
             <summary>
             Used to register the history client in the AutoFac container
@@ -545,6 +679,18 @@
             Thrown when there are validation errors. Each validation message is contained within
             a <see cref="T:System.ArgumentException"/>
             </exception>
+        </member>
+        <member name="M:Lykke.AlgoStore.Service.History.Client.IHistoryClient.GetQuotes(System.DateTime,System.DateTime,System.String,System.String,System.String,System.Nullable{System.Boolean})">
+            <summary>
+             Get historical quotes for a given period
+            </summary>
+            <param name="from">The start date for the quote period (inclusive)</param>
+            <param name="to">The end date for the quote period (exclusive)</param>
+            <param name="assetPair">The asset pair of the indicator</param>
+            <param name="instanceId">The instanceId of the quote</param>
+            <param name="authToken">The instance authentication token</param>
+            <param name="isBuy">Indicates buy/sell quotes (optional)</param>
+            <returns>A list of quotes for the given period</returns>
         </member>
         <member name="T:Lykke.AlgoStore.Service.History.Client.Models.Candle">
             <summary>

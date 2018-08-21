@@ -14,6 +14,7 @@ namespace Lykke.AlgoStore.Service.History.MapperProfiles
             CreateMap<HistoryRequestModel, CandleRequest>();
             CreateMap<Candle, CandleModel>();
             CreateMap<FunctionChartingUpdateData, FunctionChartingUpdate>();
+            CreateMap<QuoteChartingUpdateData, QuoteChartingUpdate>();
         }
     }
 }

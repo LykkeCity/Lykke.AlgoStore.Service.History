@@ -93,6 +93,39 @@ namespace Lykke.AlgoStore.Service.History.Client
             }
         }
 
+        public async Task<IEnumerable<QuoteChartingUpdate>> GetQuotes(DateTime from, DateTime to, string assetPair, string instanceId, string authToken, bool? isBuy = null)
+        {
+            if (string.IsNullOrEmpty(instanceId))
+                throw new ArgumentNullException(nameof(instanceId));
+            if (string.IsNullOrEmpty(authToken))
+                throw new ArgumentNullException(nameof(authToken));
+
+            using (var operationResponse = await _historyApi.GetQuotesForPeriodWithHttpMessagesAsync(from, to, instanceId, assetPair, isBuy, GetHeaders(authToken)))
+            {
+                if (operationResponse.Response.StatusCode == System.Net.HttpStatusCode.OK)
+                    return ((IList<QuoteChartingUpdate>)operationResponse.Body).Select(c => c);
+
+                if (operationResponse.Response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                {
+                    var errors = (ErrorResponseModel)operationResponse.Body;
+                    var errorList = String.Join(",", errors.Errors);
+                    throw new HttpOperationException()
+                    {
+                        Response = new HttpResponseMessageWrapper(operationResponse.Response, errorList)
+                    };
+                }
+
+                var message = (int)operationResponse.Response.StatusCode == 429 ?
+                    "Rate limited" :
+                    "Service unavailable";
+
+                throw new HttpOperationException(message)
+                {
+                    Response = new HttpResponseMessageWrapper(operationResponse.Response, "")
+                };
+            }
+        }
+
         public void Dispose()
         {
             _historyApi?.Dispose();
@@ -105,5 +138,7 @@ namespace Lykke.AlgoStore.Service.History.Client
                 ["Authorization"] = new List<string> { $"Bearer {authToken}" }
             };
         }
+
+        
     }
 }
