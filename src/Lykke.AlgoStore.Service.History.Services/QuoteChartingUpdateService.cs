@@ -26,7 +26,7 @@ namespace Lykke.AlgoStore.Service.History.Services
 
             var quotes = await _quotesRepo.GetQuotesForPeriodAsync(instanceId, assetPair, from, to, ct, isBuy);
 
-            var result = quotes.Select(AutoMapper.Mapper.Map<QuoteChartingUpdate>);
+            var result = AutoMapper.Mapper.Map<IEnumerable<QuoteChartingUpdate>>(quotes);
 
             return result;
         }
