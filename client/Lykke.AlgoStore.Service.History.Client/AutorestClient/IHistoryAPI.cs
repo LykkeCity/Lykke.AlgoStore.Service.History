@@ -84,5 +84,23 @@ namespace Lykke.AlgoStore.Service.History.Client.AutorestClient
         /// </param>
         Task<HttpOperationResponse<IsAliveResponse>> IsAliveWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
+        /// <param name='fromParameter'>
+        /// </param>
+        /// <param name='to'>
+        /// </param>
+        /// <param name='instanceId'>
+        /// </param>
+        /// <param name='asetPair'>
+        /// </param>
+        /// <param name='isBuy'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<object>> GetQuotesForPeriodWithHttpMessagesAsync(System.DateTime fromParameter, System.DateTime to, string instanceId = default(string), string asetPair = default(string), bool? isBuy = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
     }
 }
