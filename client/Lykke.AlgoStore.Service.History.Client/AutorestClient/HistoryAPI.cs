@@ -660,7 +660,7 @@ namespace Lykke.AlgoStore.Service.History.Client.AutorestClient
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/v1/quotes").ToString();
             List<string> _queryParameters = new List<string>();
             if (instanceId != null)
             {

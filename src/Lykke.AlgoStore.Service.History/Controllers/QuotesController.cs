@@ -1,9 +1,11 @@
 ﻿using Common.Log;
 using Lykke.AlgoStore.Algo.Charting;
+using Lykke.AlgoStore.Security.InstanceAuth;
 using Lykke.AlgoStore.Service.History.Core.Services;
 using Lykke.AlgoStore.Service.History.Models;
 using Lykke.AlgoStore.Service.History.Utils;
 using Lykke.Common.Log;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System;
@@ -16,6 +18,9 @@ using System.Threading.Tasks;
 
 namespace Lykke.AlgoStore.Service.History.Controllers
 {
+    [Authorize]
+    [RateLimit]
+    [Route("api/v1/quotes")]
     public class QuotesController : Controller
     {
         private IQuoteChartingUpdateService _quotesService;
