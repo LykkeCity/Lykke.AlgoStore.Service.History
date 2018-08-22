@@ -8,7 +8,9 @@ using Lykke.AlgoStore.Service.History.Services;
 using Lykke.AlgoStore.Service.History.Settings;
 using Lykke.SettingsReader;
 using System;
+using Lykke.Common.Log;
 using Lykke.Logs;
+using Lykke.Logs.Loggers.LykkeAzureTable;
 using Lykke.Logs.Loggers.LykkeConsole;
 
 namespace Lykke.AlgoStore.Service.History.Modules
@@ -35,9 +37,24 @@ namespace Lykke.AlgoStore.Service.History.Modules
                         .Create(reloadingDbManager, AlgoClientInstanceRepository.TableName, tempLog));
             builder.RegisterInstance(AzureTableStorage<AlgoInstanceTcBuildEntity>
                         .Create(reloadingDbManager, AlgoClientInstanceRepository.TableName, tempLog));
+
+            builder.RegisterInstance(AzureTableStorage<FunctionChartingUpdateEntity>
+                .Create(reloadingDbManager, FunctionChartingUpdateRepository.TableName, tempLog));
+
+            builder.RegisterInstance(AzureTableStorage<QuoteChartingUpdateEntity>
+                .Create(reloadingDbManager, QuoteChartingUpdateRepository.TableName, tempLog));
+
             builder.RegisterType<AlgoClientInstanceRepository>().As<IAlgoClientInstanceRepository>();
 
+            builder.RegisterType<FunctionChartingUpdateRepository>().As<IFunctionChartingUpdateRepository>();
+
+            builder.RegisterType<QuoteChartingUpdateRepository>().As<IQuoteChartingUpdateRepository>();
+
             builder.RegisterType<CandleProviderService>().As<ICandleProviderService>();
+
+            builder.RegisterType<FunctionChartingUpdateService>().As<IFunctionChartingUpdateService>();
+
+            builder.RegisterType<QuoteChartingUpdateService>().As<IQuoteChartingUpdateService>();
 
             builder.RegisterInstance(_appSettings.CurrentValue.AlgoStoreHistoryService.RateLimitSettings)
                 .AsSelf()

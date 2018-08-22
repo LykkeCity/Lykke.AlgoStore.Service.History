@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Lykke.AlgoStore.Service.History.Client.AutorestClient.Models;
+using CandleTimeInterval = Lykke.AlgoStore.Service.History.Client.Models.CandleTimeInterval;
 
 namespace Lykke.AlgoStore.Service.History.Client
 {
@@ -38,5 +40,33 @@ namespace Lykke.AlgoStore.Service.History.Client
             CandleTimeInterval timeInterval,
             string indicatorName, 
             string authToken);
+
+
+        Task<IEnumerable<FunctionChartingUpdate>> GetFunctionValues(
+            string instanceId,
+            DateTime from,
+            DateTime to,
+            string authToken);
+
+
+        /// <summary>
+        ///  Get historical quotes for a given period
+        /// </summary>
+        /// <param name="from">The start date for the quote period (inclusive)</param>
+        /// <param name="to">The end date for the quote period (exclusive)</param>
+        /// <param name="assetPair">The asset pair of the indicator</param>
+        /// <param name="instanceId">The instanceId of the quote</param>
+        /// <param name="authToken">The instance authentication token</param>
+        /// <param name="isBuy">Indicates buy/sell quotes (optional)</param>
+        /// <returns>A list of quotes for the given period</returns>
+        Task<IEnumerable<QuoteChartingUpdate>> GetQuotes(
+            DateTime from,
+            DateTime to,          
+            string assetPair,
+            string instanceId,
+            string authToken,
+            bool? isBuy = null
+        );
+
     }
 }
