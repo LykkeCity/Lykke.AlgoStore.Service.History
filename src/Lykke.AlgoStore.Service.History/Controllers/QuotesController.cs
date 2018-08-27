@@ -38,7 +38,7 @@ namespace Lykke.AlgoStore.Service.History.Controllers
         [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(ErrorResponseModel))]
         [ProducesResponseType((int)HttpStatusCode.TooManyRequests)]
         [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
-        public async Task<IActionResult> GetQuotesForPeriod([Required]string instanceId, string asetPair,  DateTime from, DateTime to, bool? isBuy = null)
+        public async Task<IActionResult> GetQuotesForPeriod([Required]string instanceId, string assetPair,  DateTime from, DateTime to, bool? isBuy = null)
         {
             _log.Info(nameof(GetQuotesForPeriod), $"Request for instanceId {instanceId}, from {from}, to: {to}", context: nameof(GetQuotesForPeriod));
 
@@ -50,7 +50,7 @@ namespace Lykke.AlgoStore.Service.History.Controllers
             try
             {
                 var cts = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-                var functions = await _quotesService.GetQuoteChartingUpdateForPeriodAsync(from, to, instanceId, asetPair, new ModelStateWrapper(ModelState), cts.Token, isBuy);
+                var functions = await _quotesService.GetQuoteChartingUpdateForPeriodAsync(from, to, instanceId, assetPair, new ModelStateWrapper(ModelState), cts.Token, isBuy);
 
                 if (!ModelState.IsValid)
                     return BadRequest(ErrorResponseModel.CreateFromModelState(ModelState));

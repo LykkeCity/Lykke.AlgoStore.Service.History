@@ -622,7 +622,7 @@ namespace Lykke.AlgoStore.Service.History.Client.AutorestClient
         /// </param>
         /// <param name='instanceId'>
         /// </param>
-        /// <param name='asetPair'>
+        /// <param name='assetPair'>
         /// </param>
         /// <param name='isBuy'>
         /// </param>
@@ -641,7 +641,7 @@ namespace Lykke.AlgoStore.Service.History.Client.AutorestClient
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> GetQuotesForPeriodWithHttpMessagesAsync(System.DateTime fromParameter, System.DateTime to, string instanceId = default(string), string asetPair = default(string), bool? isBuy = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> GetQuotesForPeriodWithHttpMessagesAsync(System.DateTime fromParameter, System.DateTime to, string instanceId = default(string), string assetPair = default(string), bool? isBuy = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -651,7 +651,7 @@ namespace Lykke.AlgoStore.Service.History.Client.AutorestClient
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("instanceId", instanceId);
-                tracingParameters.Add("asetPair", asetPair);
+                tracingParameters.Add("assetPair", assetPair);
                 tracingParameters.Add("fromParameter", fromParameter);
                 tracingParameters.Add("to", to);
                 tracingParameters.Add("isBuy", isBuy);
@@ -666,9 +666,9 @@ namespace Lykke.AlgoStore.Service.History.Client.AutorestClient
             {
                 _queryParameters.Add(string.Format("instanceId={0}", System.Uri.EscapeDataString(instanceId)));
             }
-            if (asetPair != null)
+            if (assetPair != null)
             {
-                _queryParameters.Add(string.Format("asetPair={0}", System.Uri.EscapeDataString(asetPair)));
+                _queryParameters.Add(string.Format("assetPair={0}", System.Uri.EscapeDataString(assetPair)));
             }
             _queryParameters.Add(string.Format("from={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(fromParameter, SerializationSettings).Trim('"'))));
             _queryParameters.Add(string.Format("to={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(to, SerializationSettings).Trim('"'))));

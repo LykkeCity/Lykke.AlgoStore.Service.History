@@ -142,13 +142,13 @@ namespace Lykke.AlgoStore.Service.History.Client.AutorestClient
             /// </param>
             /// <param name='instanceId'>
             /// </param>
-            /// <param name='asetPair'>
+            /// <param name='assetPair'>
             /// </param>
             /// <param name='isBuy'>
             /// </param>
-            public static object GetQuotesForPeriod(this IHistoryAPI operations, System.DateTime fromParameter, System.DateTime to, string instanceId = default(string), string asetPair = default(string), bool? isBuy = default(bool?))
+            public static object GetQuotesForPeriod(this IHistoryAPI operations, System.DateTime fromParameter, System.DateTime to, string instanceId = default(string), string assetPair = default(string), bool? isBuy = default(bool?))
             {
-                return operations.GetQuotesForPeriodAsync(fromParameter, to, instanceId, asetPair, isBuy).GetAwaiter().GetResult();
+                return operations.GetQuotesForPeriodAsync(fromParameter, to, instanceId, assetPair, isBuy).GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -160,16 +160,16 @@ namespace Lykke.AlgoStore.Service.History.Client.AutorestClient
             /// </param>
             /// <param name='instanceId'>
             /// </param>
-            /// <param name='asetPair'>
+            /// <param name='assetPair'>
             /// </param>
             /// <param name='isBuy'>
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> GetQuotesForPeriodAsync(this IHistoryAPI operations, System.DateTime fromParameter, System.DateTime to, string instanceId = default(string), string asetPair = default(string), bool? isBuy = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> GetQuotesForPeriodAsync(this IHistoryAPI operations, System.DateTime fromParameter, System.DateTime to, string instanceId = default(string), string assetPair = default(string), bool? isBuy = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetQuotesForPeriodWithHttpMessagesAsync(fromParameter, to, instanceId, asetPair, isBuy, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetQuotesForPeriodWithHttpMessagesAsync(fromParameter, to, instanceId, assetPair, isBuy, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
