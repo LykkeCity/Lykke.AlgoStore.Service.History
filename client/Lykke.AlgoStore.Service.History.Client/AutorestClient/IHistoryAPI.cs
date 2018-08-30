@@ -90,7 +90,7 @@ namespace Lykke.AlgoStore.Service.History.Client.AutorestClient
         /// </param>
         /// <param name='instanceId'>
         /// </param>
-        /// <param name='asetPair'>
+        /// <param name='assetPair'>
         /// </param>
         /// <param name='isBuy'>
         /// </param>
@@ -100,7 +100,7 @@ namespace Lykke.AlgoStore.Service.History.Client.AutorestClient
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<object>> GetQuotesForPeriodWithHttpMessagesAsync(System.DateTime fromParameter, System.DateTime to, string instanceId = default(string), string asetPair = default(string), bool? isBuy = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<object>> GetQuotesForPeriodWithHttpMessagesAsync(System.DateTime fromParameter, System.DateTime to, string instanceId = default(string), string assetPair = default(string), bool? isBuy = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }
