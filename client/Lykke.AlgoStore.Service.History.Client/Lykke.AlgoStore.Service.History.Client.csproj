@@ -20,8 +20,8 @@
     <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Lykke.Common" Version="7.0.3" />
-    <PackageReference Include="Microsoft.Rest.ClientRuntime" Version="2.3.11" />
+    <PackageReference Include="Lykke.Common" Version="7.0.4" />
+    <PackageReference Include="Microsoft.Rest.ClientRuntime" Version="2.3.13" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="AutorestClient\" />
