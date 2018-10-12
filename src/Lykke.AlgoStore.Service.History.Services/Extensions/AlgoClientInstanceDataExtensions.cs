@@ -24,11 +24,11 @@ namespace Lykke.AlgoStore.Service.History.Services.Extensions
             if(function != null)
             {
                 indicatorData.Name = function.Id;
-                indicatorData.AssetPair = function.Parameters.FirstOrDefault(f => f.Key == "assetPair")?.Value;
+                indicatorData.AssetPair = function.Parameters.Where(f => f.Visible).FirstOrDefault(f => f.Key == "assetPair")?.Value;
 
-                var startDateVal = function.Parameters.FirstOrDefault(f => f.Key == "startingDate")?.Value;
-                var endDateVal = function.Parameters.FirstOrDefault(f => f.Key == "endingDate")?.Value;
-                var intervalVal = function.Parameters.FirstOrDefault(f => f.Key == "candleTimeInterval")?.Value;
+                var startDateVal = function.Parameters.Where(f => f.Visible).FirstOrDefault(f => f.Key == "startingDate")?.Value;
+                var endDateVal = function.Parameters.Where(f => f.Visible).FirstOrDefault(f => f.Key == "endingDate")?.Value;
+                var intervalVal = function.Parameters.Where(f => f.Visible).FirstOrDefault(f => f.Key == "candleTimeInterval")?.Value;
 
                 if (!string.IsNullOrEmpty(intervalVal))
                     indicatorData.CandleTimeInterval = Enum.Parse<CandleTimeInterval>(intervalVal);
